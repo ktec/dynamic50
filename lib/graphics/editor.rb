@@ -41,6 +41,8 @@ module Graphics
       end
     end
     
+    private
+    
     def image
       @image
     end
