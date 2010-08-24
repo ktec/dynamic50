@@ -80,19 +80,25 @@ module Graphics
           end
         end
 
-        #context "with FXYC command" do
-        #  it "fill the region R with colour C. R is defined as Pixel(X,Y) and any adjacent pixel with the same colour" do
-        #    editor.command('C')
-        #    editor.command('F33J')
-        #    editor.image.should eql([[0,0,'J',0,0],
-        #                             [0,0,'J',0,0],
-        #                             ['J','J','J','J','J'],
-        #                             [0,0,'J',0,0],
-        #                             [0,0,'J',0,0],
-        #                             [0,0,'J',0,0]])
-        #    
-        #  end
-        #end
+        context "with FXYC command" do
+          it "fill the region R with colour C. R is defined as: Pixel (X,Y) belongs to R. Any other pixel which is the same colour as (X,Y) and shares a common side with any pixel in R also belongs to this region" do
+            editor.command('C')
+            editor.image.should eql([[0,0,0,0,0],
+                                     [0,0,0,0,0],
+                                     [0,0,0,0,0],
+                                     [0,0,0,0,0],
+                                     [0,0,0,0,0],
+                                     [0,0,0,0,0]])
+            editor.command('F33J')
+            editor.image.should eql([['J','J','J','J','J'],
+                                     ['J','J','J','J','J'],
+                                     ['J','J','J','J','J'],
+                                     ['J','J','J','J','J'],
+                                     ['J','J','J','J','J'],
+                                     ['J','J','J','J','J']])
+                                    
+          end
+        end
         
         describe "#set_pixel" do
           it "sets the colour of 2,2 to A" do

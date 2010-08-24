@@ -26,15 +26,8 @@ module Graphics
         x1,x2,y,col = arr[0].to_i,arr[1].to_i,arr[2].to_i,arr[3]
         (x1..x2).each{|x| set_pixel(y,x,col) }
       when "F"
-        ## AMBIGIOUS QUESTION!!!
-        x1,y1,col = arr[0].to_i,arr[1].to_i,arr[2]
-        original_col = get_pixel(x1,y1)
-        set_pixel(x1,y1,col)
-        @image.each_with_index {|x,xi|
-          x.each_with_index {|y,yi|
-            set_pixel(xi,yi,col) if (xi=x1 || yi=x1) # || y = original_col
-          }
-        }
+        x,y,col = arr[0].to_i,arr[1].to_i,arr[2]
+        fill(x,y,col)
       when "S":
         paint
       when "X":
@@ -49,15 +42,48 @@ module Graphics
     end
     
     def create_image(w,h)
-      @image = Array.new(h){Array.new(w).fill(0)}
+      @width = w
+      @height = h
+      @image = Array.new(@height){Array.new(@width).fill(0)}
     end
     
-    def set_pixel(x,y,colour)
-      @image[x-1][y-1] = colour
+    def set_pixel(x,y,col)
+      x,y = x-1, y-1 # normalise the values
+      row = @image[x]
+      row[y] = col if row
+    end
+
+    def fill(x,y,newCol,origCol=nil)
+      if in_range?(x,y)
+        origCol = get_pixel(x,y) if origCol.nil?
+        set_pixel(x,y,newCol)
+        fill?(x-1,y-1,newCol,origCol)
+        fill?(x  ,y-1,newCol,origCol)
+        fill?(x+1,y-1,newCol,origCol)
+        fill?(x-1,y  ,newCol,origCol)
+        fill?(x+1,y  ,newCol,origCol)
+        fill?(x-1,y+1,newCol,origCol)
+        fill?(x  ,y+1,newCol,origCol)
+        fill?(x+1,y+1,newCol,origCol)
+      end
+    end
+    
+    def fill?(x,y,newCol,origCol)
+      if in_range?(x-1,y-1)
+        col = get_pixel(x,y)
+        if (col != newCol && col == origCol)
+          fill (x,y,newCol,origCol)
+        end
+      end
+    end
+    
+    def in_range?(x,y)
+      (x>=0 && y>=0 && x <= @height && y <= @width)
     end
     
     def get_pixel(x,y)
-      @image[x-1][y-1]
+      row = @image[x-1]
+      row[y-1] if row
     end
     
     def clear

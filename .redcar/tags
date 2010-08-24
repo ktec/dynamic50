@@ -1,4 +1,4 @@
-1282618595
+1282687696
 Editor	/home/keith/code/dynamic50/lib/graphics/editor.rb	  class Editor
 Graphics	/home/keith/code/dynamic50/lib/graphics/editor.rb	module Graphics
 Graphics	/home/keith/code/dynamic50/spec/graphics/editor_spec.rb	module Graphics
@@ -6,8 +6,11 @@ Output	/home/keith/code/dynamic50/features/step_definitions/editor_steps.rb	clas
 clear	/home/keith/code/dynamic50/lib/graphics/editor.rb	    def clear
 command	/home/keith/code/dynamic50/lib/graphics/editor.rb	    def command
 create_image	/home/keith/code/dynamic50/lib/graphics/editor.rb	    def create_image
+fill	/home/keith/code/dynamic50/lib/graphics/editor.rb	    def fill
+fill?	/home/keith/code/dynamic50/lib/graphics/editor.rb	    def fill?
 get_pixel	/home/keith/code/dynamic50/lib/graphics/editor.rb	    def get_pixel
 image	/home/keith/code/dynamic50/lib/graphics/editor.rb	    def image
+in_range?	/home/keith/code/dynamic50/lib/graphics/editor.rb	    def in_range?
 initialize	/home/keith/code/dynamic50/lib/graphics/editor.rb	    def initialize
 messages	/home/keith/code/dynamic50/features/step_definitions/editor_steps.rb	  def messages
 output	/home/keith/code/dynamic50/features/step_definitions/editor_steps.rb	def output
