@@ -93,9 +93,7 @@ module Graphics
     end
     
     def clear
-      @image.each { |row|
-        row.fill(0)
-      }
+      @image.map {|r|r.fill(0)}
     end
     
     def paint
