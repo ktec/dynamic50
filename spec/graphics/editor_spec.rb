@@ -33,73 +33,63 @@ module Graphics
         end
  
         it "has an image store with size MxN" do
-          editor.image.should eql [[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]]
+          editor.image.should eql [[0,0,0,0,0],
+                                   [0,0,0,0,0],
+                                   [0,0,0,0,0],
+                                   [0,0,0,0,0],
+                                   [0,0,0,0,0],
+                                   [0,0,0,0,0]]
         end
- 
+
+        context "with S command" do
+          it "sends the image to output" do
+            output.should_receive(:puts).with("00000\n00000\n00000\n00000\n00000\n00000\n")
+            editor.command('S')
+          end
+        end
+        
         context "with LXYC command" do
           it "colours the pixel (2,3) with colour 'A'" do
+            output.should_receive(:puts).with("00000\n00A00\n00000\n00000\n00000\n00000\n")
             editor.command('L23A')
-            editor.get_pixel(2,3).should eql('A')
+            editor.command('S')
           end
         end
  
         context "with C command" do
           it "clear the table and set all pixels to white (0)" do
+            output.should_receive(:puts).with("00000\n00000\n00000\n00000\n00000\n00000\n")
             editor.command('C')
-            editor.image.should be_all { |row| 
-              row.should be_all { |pixel| pixel == 0 }
-            }
+            editor.command('S')
           end
         end
 
         context "with VXY1Y2C command" do
           it "draws a vertical segment of colour C in column X between Y1 and Y2 inclusive" do
             editor.command('C')
+            output.should_receive(:puts).with("00000\n00000\n0W000\n0W000\n00000\n00000\n")
             editor.command('V234W')
-            editor.image.should eql([[0,0,0,0,0],
-                                     [0,0,0,0,0],
-                                     [0,'W',0,0,0],
-                                     [0,'W',0,0,0],
-                                     [0,0,0,0,0],
-                                     [0,0,0,0,0]])
-            
+            editor.command('S')
           end
         end
 
         context "with HX1X2YC command" do
           it "draws a horizontal segment of colour C in row Y between X1 and X2 inclusive" do
             editor.command('C')
+            output.should_receive(:puts).with("00000\n00ZZ0\n00000\n00000\n00000\n00000\n")
             editor.command('H342Z')
-            editor.image.should eql([[0,0,0,0,0],
-                                     [0,0,'Z','Z',0],
-                                     [0,0,0,0,0],
-                                     [0,0,0,0,0],
-                                     [0,0,0,0,0],
-                                     [0,0,0,0,0]])
-            
+            editor.command('S')
           end
         end
 
         context "with FXYC command" do
           it "fill the region R with colour C. R is defined as: Pixel (X,Y) belongs to R. Any other pixel which is the same colour as (X,Y) and shares a common side with any pixel in R also belongs to this region" do
-            editor.command('C')
-            editor.image.should eql([[0,0,0,0,0],
-                                     [0,0,0,0,0],
-                                     [0,0,0,0,0],
-                                     [0,0,0,0,0],
-                                     [0,0,0,0,0],
-                                     [0,0,0,0,0]])
+            output.should_receive(:puts).with("JJJJJ\nJJJJJ\nJJJJJ\nJJJJJ\nJJJJJ\nJJJJJ\n")
             editor.command('F33J')
-            editor.image.should eql([['J','J','J','J','J'],
-                                     ['J','J','J','J','J'],
-                                     ['J','J','J','J','J'],
-                                     ['J','J','J','J','J'],
-                                     ['J','J','J','J','J'],
-                                     ['J','J','J','J','J']])
-                                    
+            editor.command('S')
           end
         end
-        
+
         describe "#set_pixel" do
           it "sets the colour of 2,2 to A" do
             editor.set_pixel(2,2,'A')

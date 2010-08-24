@@ -97,9 +97,11 @@ module Graphics
     end
     
     def paint
+      str = ""
       @image.each { |row|
-        puts row.join("")
+         str += "#{row.join("")}\n"
       }
+      @output.puts str
     end
     
   end
