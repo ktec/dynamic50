@@ -61,14 +61,16 @@ module Graphics
       if in_range?(x,y)
         origCol = get_pixel(x,y) if origCol.nil?
         set_pixel(x,y,newCol)
-        fill?(x-1,y-1,newCol,origCol)
-        fill?(x  ,y-1,newCol,origCol)
-        fill?(x+1,y-1,newCol,origCol)
-        fill?(x-1,y  ,newCol,origCol)
-        fill?(x+1,y  ,newCol,origCol)
-        fill?(x-1,y+1,newCol,origCol)
-        fill?(x  ,y+1,newCol,origCol)
-        fill?(x+1,y+1,newCol,origCol)
+        [[x-1,y-1],
+         [x,y-1],
+         [x+1,y-1],
+         [x-1,y],
+         [x+1,y],
+         [x-1,y+1],
+         [x,y+1],
+         [x+1,y+1]].each { |x,y|
+          fill?(x,y,newCol,origCol)
+        }
       end
     end
     
