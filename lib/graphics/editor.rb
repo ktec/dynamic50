@@ -75,11 +75,9 @@ module Graphics
     end
     
     def fill?(x,y,newCol,origCol)
-      if in_range?(x-1,y-1)
-        col = get_pixel(x,y)
-        if (col != newCol && col == origCol)
-          fill (x,y,newCol,origCol)
-        end
+      col = get_pixel(x,y)
+      if (col != newCol && col == origCol)
+        fill (x,y,newCol,origCol)
       end
     end
     
