@@ -14,19 +14,23 @@ module Graphics
       arr = string.split("")
       case arr.shift # first character
       when "I":
-        w,h = arr[0].to_i,arr[1].to_i
+        w,h = arr.map(&:to_i)
         create_image(w,h)
       when "L":
-        x,y,col = arr[0].to_i,arr[1].to_i,arr[2]
+        x,y = arr[0..1].map(&:to_i)
+        col = arr[2]
         set_pixel(x,y,col)
       when "V"
-        x,y1,y2,col = arr[0].to_i,arr[1].to_i,arr[2].to_i,arr[3]
+        x,y1,y2 = arr[0..2].map(&:to_i)
+        col = arr[3]
         (y1..y2).each{|y| set_pixel(y,x,col) }
       when "H"
-        x1,x2,y,col = arr[0].to_i,arr[1].to_i,arr[2].to_i,arr[3]
+        x1,x2,y = arr[0..2].map(&:to_i)
+        col = arr[3]
         (x1..x2).each{|x| set_pixel(y,x,col) }
       when "F"
-        x,y,col = arr[0].to_i,arr[1].to_i,arr[2]
+        x,y = arr[0..2].map(&:to_i)
+        col = arr[2]
         fill(x,y,col)
       when "S":
         paint
