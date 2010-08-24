@@ -32,15 +32,6 @@ module Graphics
           editor.command('I56')
         end
  
-        it "has an image store with size MxN" do
-          editor.image.should eql [[0,0,0,0,0],
-                                   [0,0,0,0,0],
-                                   [0,0,0,0,0],
-                                   [0,0,0,0,0],
-                                   [0,0,0,0,0],
-                                   [0,0,0,0,0]]
-        end
-
         context "with S command" do
           it "sends the image to output" do
             output.should_receive(:puts).with("00000\n00000\n00000\n00000\n00000\n00000\n")
@@ -87,33 +78,6 @@ module Graphics
             output.should_receive(:puts).with("JJJJJ\nJJJJJ\nJJJJJ\nJJJJJ\nJJJJJ\nJJJJJ\n")
             editor.command('F33J')
             editor.command('S')
-          end
-        end
-
-        describe "#set_pixel" do
-          it "sets the colour of 2,2 to A" do
-            editor.set_pixel(2,2,'A')
-            editor.image[1][1].should eql('A')
-          end
-          it "sets the colour of 2,2 to 0" do
-            editor.set_pixel(2,2,0)
-            editor.image[1][1].should eql(0)
-          end
-        end
-        
-        context "and bottom right is A" do
-
-          before :each do
-            editor.set_pixel(2,2,'A')
-          end
-
-          describe "#get_pixel" do
-            it "returns the bottom right" do
-              editor.get_pixel(2,2).should eql('A')
-            end
-            it "returns the top left" do
-              editor.get_pixel(1,1).should eql(0)
-            end
           end
         end
 
