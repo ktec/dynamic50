@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+$LOAD_PATH.unshift File.expand_path('../../lib' , __FILE__)
+require 'graphed'
+editor = Graphics::Editor.new(STDOUT)
+editor.start
+at_exit { puts "\n***\nThanks for using MS Graphics Editor 2010\n***" }
+while command = gets.chomp
+  editor.command(command)
+end
