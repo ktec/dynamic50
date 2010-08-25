@@ -8,5 +8,5 @@ Feature: Designer creates a new image
     Given I am not already drawing a great picture
     When I start a new session
     And I submit the command "I56"
-    Then a new image should be created
-    
+    And I submit the command "S"
+    Then I should see the image

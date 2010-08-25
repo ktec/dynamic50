@@ -24,14 +24,15 @@ Then /^I should see "([^"]*)"$/ do |message|
   output.messages.should include(message)
 end
 
+Then /^I should see the image$/ do 
+  output.messages.should include("00000\n00000\n00000\n00000\n00000\n00000\n")
+end
+
+
 When /^I submit the command "([^"]*)"$/ do |command|
   @editor.command(command)
 end
 
-Then /^a new image should be created$/ do
-  @editor.should respond_to(:image)
-  @editor.image.should_not be_empty
-end
 
 
 
